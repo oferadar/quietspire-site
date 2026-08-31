@@ -27,6 +27,9 @@ h1{font-family:"Bebas Neue",Oswald,sans-serif;letter-spacing:.04em;font-weight:4
 .slab .b{width:120px;background:var(--terra)}
 .slab .c{width:120px;background:var(--stone)}
 .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:8px 16px;color:var(--muted);font-size:14px;letter-spacing:.04em}
+.stores{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.pill.go{text-decoration:none;color:var(--ink);border-color:var(--muted)}
+.pill.go:hover{color:var(--teal);border-color:var(--teal)}
 .doc h1{font-size:clamp(38px,8vw,58px)}
 .eff{color:var(--faint);font-size:14px;margin:-4px 0 30px;letter-spacing:.03em}
 h2{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin:38px 0 10px}
