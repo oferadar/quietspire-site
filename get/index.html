@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Hapax</title>
+<meta name="description" content="Hapax, one word a day on your Lock Screen. Free on iPhone and Android.">
+<link rel="canonical" href="https://quietspire.com/get/">
+<link rel="stylesheet" href="/style.css">
+<script>
+// Send each visitor to their own store. The Play Store URL has to carry the
+// package name, which is permanent and cannot be changed once an app has been
+// published, so this page exists to be the link that gets shared instead.
+(function () {
+  var ios = "https://apps.apple.com/app/id6799694673";
+  var play = "https://play.google.com/store/apps/details?id=com.oferadar.hapax&referrer=utm_source%3Dquietspire";
+  var ua = navigator.userAgent || "";
+  // iPadOS 13 and later reports itself as a Mac, so a Mac with touch is an iPad.
+  var isIOS = /iPhone|iPad|iPod/.test(ua) ||
+              (/Macintosh/.test(ua) && typeof document.ontouchend !== "undefined");
+  var isAndroid = /Android/.test(ua);
+  if (isIOS) location.replace(ios);
+  else if (isAndroid) location.replace(play);
+  // Anything else, a desktop browser, stays here and picks for itself.
+})();
+</script>
+</head>
+<body>
+<div class="wrap">
+  <header class="site">
+    <div class="navrow">
+      <a class="brand" href="/index.html" style="text-decoration:none">Quietspire</a>
+      <nav><a href="/hapax/index.html">Hapax</a><a href="/hapax/words/index.html">Words</a></nav>
+    </div>
+  </header>
+  <main class="hero" style="padding:64px 0 40px">
+    <div class="pilmark" style="font-size:64px;margin:0 0 10px">&#182;</div>
+    <h1>HAPAX</h1>
+    <p class="tag">One word a day, on your Lock Screen.</p>
+    <div class="stores">
+      <a class="pill go" href="https://apps.apple.com/app/id6799694673">Download on the App Store</a>
+      <a class="pill go" href="https://play.google.com/store/apps/details?id=com.oferadar.hapax&amp;referrer=utm_source%3Dquietspire">Get it on Google Play</a>
+    </div>
+  </main>
+  <footer>
+    <span>© 2026 Quietspire LLC</span>
+    <span><a href="/hapax/privacy.html">Privacy</a>  <a href="/hapax/support.html">Support</a></span>
+  </footer>
+</div>
+</body>
+</html>
