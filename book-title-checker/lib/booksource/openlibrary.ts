@@ -11,7 +11,7 @@ import { BookSourceUnavailableError, type SearchResult, type WorkResult } from "
  */
 
 const ENDPOINT = "https://openlibrary.org/search.json";
-const FIELDS = "key,title,subtitle,author_name,first_publish_year,edition_count,cover_i";
+const FIELDS = "key,title,subtitle,author_name,first_publish_year,publish_year,edition_count,cover_i";
 const LIMIT = 50;
 /**
  * Open Library answers in 0.3-5 s when it answers at all, but its front door
@@ -34,6 +34,7 @@ interface OpenLibraryDoc {
   subtitle?: unknown;
   author_name?: unknown;
   first_publish_year?: unknown;
+  publish_year?: unknown;
   edition_count?: unknown;
   cover_i?: unknown;
 }
@@ -44,6 +45,17 @@ function asString(v: unknown): string | undefined {
 
 function asInt(v: unknown): number | undefined {
   return typeof v === "number" && Number.isFinite(v) ? Math.trunc(v) : undefined;
+}
+
+/** Largest plausible year in Open Library's publish_year list, if any. */
+function latestYear(v: unknown): number | undefined {
+  if (!Array.isArray(v)) return undefined;
+  let best: number | undefined;
+  for (const y of v) {
+    if (typeof y !== "number" || !Number.isFinite(y) || y < 1400 || y > 2100) continue;
+    if (best === undefined || y > best) best = y;
+  }
+  return best;
 }
 
 function toWork(doc: OpenLibraryDoc): WorkResult | null {
@@ -59,6 +71,7 @@ function toWork(doc: OpenLibraryDoc): WorkResult | null {
     subtitle: asString(doc.subtitle),
     authors,
     firstPublishYear: asInt(doc.first_publish_year),
+    lastPublishYear: latestYear(doc.publish_year),
     editionCount: asInt(doc.edition_count) ?? 0,
     coverId: asInt(doc.cover_i),
   };

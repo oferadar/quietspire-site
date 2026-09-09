@@ -37,7 +37,7 @@ const cachedNonEmptySearch = unstable_cache(
   },
   // Bump the version whenever SearchResult changes shape, so stale entries
   // from an older deployment are never read back.
-  ["booksource-search-v2"],
+  ["booksource-search-v3"],
   { revalidate: SEARCH_REVALIDATE_SECONDS, tags: ["booksource"] },
 );
 

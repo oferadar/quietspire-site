@@ -17,6 +17,11 @@ export interface WorkResult {
   authors: string[];
   /** Year of the earliest known edition. Undefined when unknown. */
   firstPublishYear?: number;
+  /**
+   * Year of the most recent known edition. A 1965 novel still being printed
+   * in 2024 is a live competitor; this is what says so.
+   */
+  lastPublishYear?: number;
   /** How many editions the source knows about. 0 when unknown. */
   editionCount: number;
   /** Open Library cover id for https://covers.openlibrary.org/b/id/{id}-M.jpg */

@@ -95,3 +95,17 @@ describe("real data: nonsense", () => {
     expect(r.totalFound).toBe(0);
   });
 });
+
+describe("publish_year parsing", () => {
+  it("keeps the most recent plausible year and ignores junk", () => {
+    const r = parseSearchResponse({
+      numFound: 1,
+      docs: [
+        { key: "/works/OL1W", title: "Dune", first_publish_year: 1965, publish_year: [1965, 1990, 2024, 9999, "x", 12] },
+        { key: "/works/OL2W", title: "Old", first_publish_year: 1911 },
+      ],
+    });
+    expect(r.works[0].lastPublishYear).toBe(2024);
+    expect(r.works[1].lastPublishYear).toBeUndefined();
+  });
+});

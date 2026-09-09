@@ -110,8 +110,17 @@ function blend(e: number, r: number): number {
 }
 
 /** Strength of a single record. */
+/**
+ * The year that says whether a book is still in the market: its most recent
+ * edition when Open Library knows it, otherwise its first. A classic reprinted
+ * last year competes like a new release; a book last printed in 1911 does not.
+ */
+export function activeYear(work: WorkResult): number | undefined {
+  return work.lastPublishYear ?? work.firstPublishYear;
+}
+
 export function matchStrength(work: WorkResult, currentYear: number): number {
-  return blend(editionSignal(work.editionCount), recencySignal(work.firstPublishYear, currentYear));
+  return blend(editionSignal(work.editionCount), recencySignal(activeYear(work), currentYear));
 }
 
 /**
@@ -184,8 +193,9 @@ function buildGroups(
   for (const records of byBook.values()) {
     records.sort((a, b) => matchStrength(b, currentYear) - matchStrength(a, currentYear));
     const years = records.map((r) => r.firstPublishYear).filter((y): y is number => y !== undefined);
+    const activeYears = records.map(activeYear).filter((y): y is number => y !== undefined);
     const totalEditions = records.reduce((sum, r) => sum + Math.max(0, r.editionCount), 0);
-    const latestYear = years.length ? Math.max(...years) : undefined;
+    const latestYear = activeYears.length ? Math.max(...activeYears) : undefined;
     const earliestYear = years.length ? Math.min(...years) : undefined;
     groups.push({
       work: records[0],

@@ -251,6 +251,23 @@ describe("computeVerdict", () => {
   });
 });
 
+describe("latest edition year", () => {
+  it("lets a classic still in print outrank a recent series entry", () => {
+    const classic = work({ key: "c", title: "Dune", authors: ["Frank Herbert"], firstPublishYear: 1965, lastPublishYear: 2024, editionCount: 161 });
+    const recent = work({ key: "r", title: "Dune", authors: ["Brian Herbert"], firstPublishYear: 2021, lastPublishYear: 2023, editionCount: 50 });
+    expect(matchStrength(classic, YEAR)).toBeGreaterThan(matchStrength(recent, YEAR));
+    const v = computeVerdict([{ work: classic, kind: "exact" }, { work: recent, kind: "exact" }], YEAR);
+    expect(v.dominant?.work.authors[0]).toBe("Frank Herbert");
+    expect(v.dominant?.latestYear).toBe(2024);
+    expect(v.dominant?.earliestYear).toBe(1965);
+  });
+
+  it("falls back to the first year when the latest is unknown", () => {
+    const old = work({ key: "o", firstPublishYear: 1911, editionCount: 1 });
+    expect(matchStrength(old, YEAR)).toBe(0);
+  });
+});
+
 describe("grouping keeps different books apart", () => {
   it("does not sum a series of same-main-title books into one competitor", () => {
     const v = computeVerdict(
