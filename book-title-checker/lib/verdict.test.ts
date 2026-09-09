@@ -251,6 +251,38 @@ describe("computeVerdict", () => {
   });
 });
 
+describe("grouping keeps different books apart", () => {
+  it("does not sum a series of same-main-title books into one competitor", () => {
+    const v = computeVerdict(
+      [
+        { work: work({ key: "f1", title: "Dune", authors: ["Frank Herbert"], firstPublishYear: 1965, editionCount: 161 }), kind: "exact" },
+        { work: work({ key: "f2", title: "Dune", authors: ["Frank Herbert"], firstPublishYear: 2021, editionCount: 20 }), kind: "exact" },
+        { work: work({ key: "b1", title: "Dune: House Atreides", authors: ["Brian Herbert"], firstPublishYear: 1999, editionCount: 40 }), kind: "exact" },
+        { work: work({ key: "b2", title: "Dune: The Machine Crusade", authors: ["Brian Herbert"], firstPublishYear: 2003, editionCount: 35 }), kind: "exact" },
+        { work: work({ key: "b3", title: "Dune: The Battle of Corrin", authors: ["Brian Herbert"], firstPublishYear: 2004, editionCount: 30 }), kind: "exact" },
+      ],
+      YEAR,
+    );
+    expect(v.exact).toHaveLength(4);
+    expect(v.dominant?.work.authors[0]).toBe("Frank Herbert");
+    expect(v.dominant?.records).toHaveLength(2);
+    expect(v.dominant?.totalEditions).toBe(181);
+  });
+
+  it("treats a generic subtitle as the same book", () => {
+    const v = computeVerdict(
+      [
+        { work: work({ key: "g1", title: "The Great Gatsby", authors: ["F. Scott Fitzgerald"], firstPublishYear: 1925, editionCount: 300 }), kind: "exact" },
+        { work: work({ key: "g2", title: "The Great Gatsby: A Novel", authors: ["F. Scott Fitzgerald"], firstPublishYear: 2004, editionCount: 4 }), kind: "exact" },
+        { work: work({ key: "g3", title: "The Great Gatsby", subtitle: "A Novel", authors: ["Francis Fitzgerald"], firstPublishYear: 2019, editionCount: 10 }), kind: "exact" },
+      ],
+      YEAR,
+    );
+    expect(v.exact).toHaveLength(1);
+    expect(v.exact[0].records).toHaveLength(3);
+  });
+});
+
 describe("tier copy", () => {
   it("never uses legal-sounding words", () => {
     const banned = /\b(available|taken|infringe|infringement|trademark|copyright)\b/i;

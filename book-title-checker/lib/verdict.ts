@@ -1,5 +1,5 @@
 import type { WorkResult } from "./booksource/types";
-import type { MatchKind } from "./normalize";
+import { normalizeMain, normalizeTitle, type MatchKind } from "./normalize";
 
 /**
  * Crowding assessment.
@@ -138,6 +138,30 @@ export function authorKey(work: WorkResult): string {
   return tokens.length === 1 ? last : `${last} ${tokens[0][0]}`;
 }
 
+/**
+ * Subtitles that name a form rather than a book. "The Great Gatsby" and
+ * "The Great Gatsby: A Novel" are one book; "Dune" and "Dune: House Atreides"
+ * are not. Matching on the key below tells those two cases apart.
+ */
+const GENERIC_SUBTITLES = new Set([
+  "a novel", "novel", "a memoir", "memoir", "a thriller", "a mystery", "a romance",
+  "stories", "a story", "short stories", "poems", "essays", "a play", "the novel",
+]);
+
+/**
+ * Records that are the same book: same author, same main title, and the same
+ * subtitle unless the subtitle is a generic form word. Series entries by one
+ * author ("Dune: House Atreides", "Dune: The Machine Crusade") stay separate,
+ * so their editions are never summed into one imaginary competitor.
+ */
+export function groupKey(work: WorkResult): string {
+  const { main, subtitle } = normalizeTitle(work.title);
+  const rawSub = subtitle ?? work.subtitle ?? "";
+  const sub = normalizeMain(rawSub);
+  const subKey = GENERIC_SUBTITLES.has(sub) ? "" : sub;
+  return `${authorKey(work)}|${main}|${subKey}`;
+}
+
 export interface ClassifiedWork {
   work: WorkResult;
   kind: MatchKind;
@@ -148,16 +172,16 @@ function buildGroups(
   kind: Exclude<MatchKind, "none">,
   currentYear: number,
 ): MatchGroup[] {
-  const byAuthor = new Map<string, WorkResult[]>();
+  const byBook = new Map<string, WorkResult[]>();
   for (const { work, kind: k } of items) {
     if (k !== kind) continue;
-    const key = authorKey(work);
-    const list = byAuthor.get(key);
+    const key = groupKey(work);
+    const list = byBook.get(key);
     if (list) list.push(work);
-    else byAuthor.set(key, [work]);
+    else byBook.set(key, [work]);
   }
   const groups: MatchGroup[] = [];
-  for (const records of byAuthor.values()) {
+  for (const records of byBook.values()) {
     records.sort((a, b) => matchStrength(b, currentYear) - matchStrength(a, currentYear));
     const years = records.map((r) => r.firstPublishYear).filter((y): y is number => y !== undefined);
     const totalEditions = records.reduce((sum, r) => sum + Math.max(0, r.editionCount), 0);
