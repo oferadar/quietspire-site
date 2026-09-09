@@ -1,0 +1,159 @@
+@import "tailwindcss";
+
+/*
+ * Palette derived from the product scene (see DESIGN.md): a self-publishing
+ * author at a desk late in the evening, manuscript finished, wanting a
+ * straight answer from something that behaves like a reference librarian.
+ * Neutrals are tinted a little toward the lamp-green accent; nothing is pure
+ * white or zero-chroma gray. Every text/background pair below was computed
+ * against WCAG AA (body >= 4.5:1, borders and focus rings >= 3:1).
+ *
+ * Every color has one job:
+ *   accent  brand, the one action button, links, focus
+ *   signal  the Crowded verdict and the unavailable state, nothing else
+ */
+:root {
+  color-scheme: light;
+  --paper: #f2f4f3;
+  --card: #fafbfa;
+  --ink: #16201c;
+  --ink-muted: #4b5751;   /* 6.83:1 on paper, 7.28:1 on card */
+  --ink-faint: #5d6963;   /* placeholders: 5.52:1 on card */
+  --rule: #cbd2ce;        /* decorative hairlines only */
+  --border: #717d77;      /* control borders: 3.88:1 on paper, 4.13:1 on card */
+  --accent: #1e5b47;      /* 7.19:1 on paper */
+  --accent-ink: #f2f4f3;  /* text on the accent button: 7.19:1 */
+  --signal: #9b2431;      /* 7.07:1 on paper, 7.52:1 on card */
+  --skeleton: #e3e7e5;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #0f1512;
+    --card: #161d19;
+    --ink: #e6ebe8;
+    --ink-muted: #a3aea8; /* 8.08:1 on paper, 7.50:1 on card */
+    --ink-faint: #a3aea8;
+    --rule: #2a3430;
+    --border: #5f6b65;    /* 3.32:1 on paper, 3.09:1 on card */
+    --accent: #86cdb1;    /* 10.02:1 on paper */
+    --accent-ink: #0f1512;
+    --signal: #ff929b;    /* 8.66:1 on paper, 8.04:1 on card */
+    --skeleton: #222b26;
+  }
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-faint: var(--ink-faint);
+  --color-rule: var(--rule);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-signal: var(--signal);
+  --color-skeleton: var(--skeleton);
+  --font-sans: var(--font-plex-sans), system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  background: var(--paper);
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+/* Every number is set in the mono cut with tabular figures. */
+.font-mono {
+  font-variant-numeric: tabular-nums;
+}
+
+::placeholder {
+  color: var(--ink-faint);
+  opacity: 1;
+}
+
+/* One focus indicator everywhere. Nothing overrides it. */
+:where(a, button, input, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion conveys state only: results arriving, the verdict landing,   */
+/* a real network wait. 150-250 ms, ease-out-quart. Every element is   */
+/* visible in its final state without the animation.                   */
+/* ------------------------------------------------------------------ */
+
+@keyframes stamp-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes skeleton-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.55; }
+}
+
+.anim-stamp {
+  animation: stamp-in 220ms var(--ease-out-quart) both;
+}
+
+.anim-rise {
+  animation: rise-in 200ms var(--ease-out-quart) both;
+}
+
+.skeleton {
+  background: var(--skeleton);
+  animation: skeleton-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-stamp,
+  .anim-rise {
+    animation: fade-in 150ms ease-out both;
+  }
+  .skeleton {
+    animation: none;
+  }
+}
+
+/* The verdict stamp: a double hairline in the current color, no shadow. */
+.stamp {
+  border: 2px solid currentColor;
+  outline: 1px solid currentColor;
+  outline-offset: 2px;
+  padding: 0.3rem 0.75rem 0.25rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
