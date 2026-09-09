@@ -15,6 +15,8 @@ import { computeVerdict, type Verdict } from "@/lib/verdict";
  */
 
 export const dynamic = "force-dynamic";
+/** Three Open Library attempts of up to 7 s each must fit inside one invocation. */
+export const maxDuration = 30;
 
 const MAX_QUERY_LENGTH = 200;
 
@@ -74,6 +76,9 @@ export async function GET(request: NextRequest) {
     result = await cachedSearch(query.main);
   } catch (err) {
     if (err instanceof BookSourceUnavailableError) {
+      // Server logs are the only place the cause is visible; the client gets
+      // a generic message on purpose.
+      console.error(`[check] "${query.main}" unavailable: ${err.message}`);
       return json(
         {
           ok: false,

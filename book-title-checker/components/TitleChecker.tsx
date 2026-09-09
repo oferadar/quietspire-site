@@ -468,10 +468,16 @@ function EmptyState({
 }
 
 function LoadingSkeleton({ title }: { title: string }) {
-  const [slow, setSlow] = useState(false);
+  // 0: nothing yet. 1: a normal wait. 2: Open Library is hanging and the
+  // server is on its second or third attempt.
+  const [stage, setStage] = useState(0);
   useEffect(() => {
-    const t = setTimeout(() => setSlow(true), 1500);
-    return () => clearTimeout(t);
+    const t1 = setTimeout(() => setStage(1), 1500);
+    const t2 = setTimeout(() => setStage(2), 9000);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+    };
   }, []);
   return (
     <div className="min-h-72 rounded-md border border-rule bg-card p-5 sm:p-6" aria-hidden="true">
@@ -487,7 +493,11 @@ function LoadingSkeleton({ title }: { title: string }) {
         <div className="skeleton h-9 rounded" />
       </div>
       <p className="mt-5 min-h-5 text-sm text-ink-muted">
-        {slow ? "Asking Open Library. This usually takes a few seconds; the next check of this title is instant." : ""}
+        {stage === 1
+          ? "Asking Open Library. This usually takes a few seconds; the next check of this title is instant."
+          : stage === 2
+            ? "Open Library is slow right now. Still trying, for up to about twenty seconds."
+            : ""}
       </p>
     </div>
   );
