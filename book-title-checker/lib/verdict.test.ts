@@ -268,6 +268,31 @@ describe("latest edition year", () => {
   });
 });
 
+describe("the book to beat", () => {
+  it("prefers an exact mega-book over a longer prefix match with more editions", () => {
+    const king = work({ key: "k", title: "It", authors: ["Stephen King"], firstPublishYear: 1986, lastPublishYear: 2024, editionCount: 95 });
+    const lewis = work({ key: "l", title: "It Can't Happen Here", authors: ["Sinclair Lewis"], firstPublishYear: 1935, lastPublishYear: 2022, editionCount: 157 });
+    const v = computeVerdict([{ work: king, kind: "exact" }, { work: lewis, kind: "near" }], YEAR);
+    expect(v.dominant?.work.key).toBe("k");
+  });
+
+  it("prefers a huge near-match series over an obscure exact match", () => {
+    const wilson = work({ key: "w", title: "Harry Potter", authors: ["Kevin Wilson"], firstPublishYear: 2018, lastPublishYear: 2018, editionCount: 6 });
+    const rowling = work({ key: "r", title: "Harry Potter and the Philosopher's Stone", authors: ["J. K. Rowling"], firstPublishYear: 1997, lastPublishYear: 2024, editionCount: 300 });
+    const v = computeVerdict([{ work: wilson, kind: "exact" }, { work: rowling, kind: "near" }], YEAR);
+    expect(v.dominant?.work.key).toBe("r");
+    expect(v.dominant?.kind).toBe("near");
+  });
+
+  it("halves a book that has been out of print for decades", () => {
+    const dead = work({ key: "d", firstPublishYear: 1930, lastPublishYear: 1955, editionCount: 40 });
+    const live = work({ key: "v", firstPublishYear: 2015, lastPublishYear: 2024, editionCount: 12 });
+    const v = computeVerdict([{ work: dead, kind: "exact" }, { work: live, kind: "exact" }], YEAR);
+    expect(v.exact[0].reach).toBeLessThan(v.exact[1].reach + 1); // both computed
+    expect(v.dominant?.work.key).toBe("v");
+  });
+});
+
 describe("grouping keeps different books apart", () => {
   it("does not sum a series of same-main-title books into one competitor", () => {
     const v = computeVerdict(

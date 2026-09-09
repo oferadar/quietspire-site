@@ -28,6 +28,13 @@ export interface MatchGroup {
   /** 0 to about 1.5: how strongly this competitor owns the title in search. */
   strength: number;
   totalEditions: number;
+  /**
+   * How likely a reader is to run into this book when searching the title:
+   * edition count, discounted for near matches and for books out of print
+   * for decades. Chooses the book to beat and orders the lists. The tier is
+   * decided by `strength`, which also weighs recency.
+   */
+  reach: number;
   earliestYear?: number;
   latestYear?: number;
 }
@@ -82,6 +89,10 @@ export const VERDICT_TUNING = {
   obscureStrength: 0.2,
   /** A near match at or above this strength stops a title being "clear". */
   nearBlocksClearStrength: 0.75,
+  /** How much of a near match's reach counts when choosing the book to beat. */
+  nearReachFactor: 0.6,
+  /** A book whose latest edition is older than this is halved when choosing the book to beat. */
+  staleAfterYears: 40,
   /** Below this total the title can still be called clear. */
   clearMaxScore: 0.5,
 } as const;
@@ -176,6 +187,21 @@ export interface ClassifiedWork {
   kind: MatchKind;
 }
 
+function reachOf(
+  kind: Exclude<MatchKind, "none">,
+  totalEditions: number,
+  latestYear: number | undefined,
+  currentYear: number,
+): number {
+  const kindFactor = kind === "near" ? VERDICT_TUNING.nearReachFactor : 1;
+  const stale = latestYear !== undefined && currentYear - latestYear > VERDICT_TUNING.staleAfterYears;
+  return editionSignal(totalEditions) * kindFactor * (stale ? 0.5 : 1);
+}
+
+function byReachThenStrength(a: MatchGroup, b: MatchGroup): number {
+  return b.reach - a.reach || b.strength - a.strength;
+}
+
 function buildGroups(
   items: ClassifiedWork[],
   kind: Exclude<MatchKind, "none">,
@@ -203,11 +229,12 @@ function buildGroups(
       kind,
       strength: blend(editionSignal(totalEditions), recencySignal(latestYear, currentYear)),
       totalEditions,
+      reach: reachOf(kind, totalEditions, latestYear, currentYear),
       earliestYear,
       latestYear,
     });
   }
-  groups.sort((a, b) => b.strength - a.strength);
+  groups.sort(byReachThenStrength);
   return groups;
 }
 
@@ -242,8 +269,12 @@ export function computeVerdict(
 
   // The strongest competitor regardless of kind: a near match with hundreds
   // of editions matters more than an exact match nobody has heard of.
-  let dominant: MatchGroup | null = exact[0] ?? null;
-  if (near[0] && (!dominant || near[0].strength > dominant.strength)) dominant = near[0];
+  // The book to beat is the one readers are most likely to meet when they
+  // search this title, so it is chosen by reach, not by recency-weighted
+  // strength: Stephen King's "It" beats "It Can't Happen Here" even though
+  // the latter has more editions, because prefix matches are discounted; and
+  // Rowling's series beats an obscure book titled exactly "Harry Potter".
+  const dominant: MatchGroup | null = [...exact, ...near].sort(byReachThenStrength)[0] ?? null;
 
   return { tier, score, exact, near, loose, noise, dominant };
 }
