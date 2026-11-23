@@ -3,57 +3,210 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Quietspire, an independent app studio</title>
-<meta name="description" content="Quietspire LLC is an independent studio making small, focused apps that respect your attention. Makers of SLAB and Hapax.">
+<title>Quietspire: the studio behind Alpha Lock, Hapax and SLAB</title>
+<meta name="description" content="Quietspire LLC is an independent app studio in New Jersey. It makes Alpha Lock, coming soon to the App Store; Hapax, a new word a day on your Lock Screen; and SLAB, a stacking game.">
+<link rel="canonical" href="https://quietspire.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quietspire.com/">
+<meta property="og:title" content="Quietspire: the studio behind Alpha Lock, Hapax and SLAB">
+<meta property="og:description" content="An independent app studio in New Jersey. Alpha Lock, Hapax and SLAB.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="img/quietspire-q.png" type="image/png">
+<link rel="apple-touch-icon" href="img/quietspire-q.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="home.css">
+<link rel="preload" as="image" href="img/scoop-psst.png">
+<script>document.documentElement.classList.add('js')</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Quietspire LLC",
+  "url": "https://quietspire.com/",
+  "email": "support@quietspire.com",
+  "logo": "https://quietspire.com/img/quietspire-q.png",
+  "address": {"@type": "PostalAddress", "addressRegion": "NJ", "addressCountry": "US"}
+}
+</script>
 </head>
 <body>
-<div class="wrap">
-  <header class="site">
-    <div class="navrow">
-      <span class="brand">Quietspire</span>
-      <nav><a href="slab/index.html">Slab</a><a href="hapax/index.html">Hapax</a></nav>
+<a class="skip" href="#apps">Skip to the apps</a>
+
+<div class="page">
+  <header class="sky">
+    <div class="sky__bar">
+      <h1 class="wordmark">Quietspire</h1>
+      <a class="sky__mail" href="mailto:support@quietspire.com"><span class="sky__mail-long">support@quietspire.com</span><span class="sky__mail-short">Contact</span></a>
     </div>
+    <p class="lede">An independent app studio in New Jersey. Three apps so far, newest at the top.</p>
+    <nav class="dock" aria-label="Our apps">
+      <a class="dock__app" href="#alpha-lock">
+        <img src="img/alpha-lock-icon.png" alt="" width="64" height="64">
+        <span class="dock__name">Alpha Lock</span>
+        <span class="dock__state">Coming soon</span>
+      </a>
+      <a class="dock__app" href="#hapax">
+        <img src="img/hapax-icon.png" alt="" width="64" height="64">
+        <span class="dock__name">Hapax</span>
+        <span class="dock__state">iOS, Android</span>
+      </a>
+      <a class="dock__app" href="#slab">
+        <img src="img/slab-icon.png" alt="" width="64" height="64">
+        <span class="dock__name">SLAB</span>
+        <span class="dock__state">iOS</span>
+      </a>
+    </nav>
   </header>
 
-  <main class="hero" style="padding:56px 0 24px">
-    <h1>Quietspire</h1>
-    <p class="tag">A small independent studio in New Jersey. We make quiet, carefully built apps: focused tools and games, made with care.</p>
+  <main id="apps" class="tower">
+
+    <!-- Top floor: the newest app. Alpha Lock speaks its own language here:
+         paper, ink outlines, hard shadows, Plus Jakarta Sans, and Scoop on the roof. -->
+    <section class="storey storey--alpha" id="alpha-lock" aria-labelledby="alpha-title" data-dir="1">
+      <button class="scoop" type="button" aria-label="Scoop the mole, Alpha Lock's mascot. Press to change his mood." data-mood="psst">
+        <img src="img/scoop-psst.png" alt="" width="400" height="400">
+      </button>
+
+      <div class="storey__body">
+        <div class="storey__text">
+          <p class="al-chip">Coming soon to the App Store</p>
+          <div class="al-head">
+            <img class="al-icon" src="img/alpha-lock-icon.png" alt="" width="64" height="64">
+            <h2 id="alpha-title" class="al-name"><img src="img/alpha-lock-wordmark.svg" alt="Alpha Lock" width="300" height="63"></h2>
+          </div>
+          <p class="al-lede">The apps you pick stay locked until you read today&rsquo;s <mark>3-minute news brief</mark>. Then they open.</p>
+          <p class="al-body">Every story is credited to the real news outlet that reported it.</p>
+          <p class="al-actions"><a class="al-btn" href="https://alphalock.app">Visit alphalock.app</a></p>
+        </div>
+
+        <figure class="al-demo" data-state="locked">
+          <div class="al-phone">
+            <div class="al-tiles" aria-hidden="true">
+              <span class="al-tile al-tile--mint">
+                <svg class="al-glyph" viewBox="0 0 24 24"><path d="M8 6.5v11l9-5.5z"/></svg>
+                <svg class="al-lock" viewBox="0 0 24 24"><path class="al-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><rect x="5" y="11" width="14" height="10" rx="2.5"/></svg>
+              </span>
+              <span class="al-tile al-tile--lav">
+                <svg class="al-glyph" viewBox="0 0 24 24"><rect x="4" y="6.5" width="16" height="12" rx="3"/><circle cx="12" cy="12.5" r="3.2"/></svg>
+                <svg class="al-lock" viewBox="0 0 24 24"><path class="al-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><rect x="5" y="11" width="14" height="10" rx="2.5"/></svg>
+              </span>
+              <span class="al-tile al-tile--coral">
+                <svg class="al-glyph" viewBox="0 0 24 24"><path d="M5 6.5h14v9H11l-4 3.5v-3.5H5z"/></svg>
+                <svg class="al-lock" viewBox="0 0 24 24"><path class="al-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><rect x="5" y="11" width="14" height="10" rx="2.5"/></svg>
+              </span>
+              <span class="al-tile al-tile--butter">
+                <svg class="al-glyph" viewBox="0 0 24 24"><path d="M6 17.5V7l12-2v10.5"/><circle cx="6" cy="17.5" r="2.2"/><circle cx="18" cy="15.5" r="2.2"/></svg>
+                <svg class="al-lock" viewBox="0 0 24 24"><path class="al-shackle" d="M8 11V8a4 4 0 0 1 8 0v3"/><rect x="5" y="11" width="14" height="10" rx="2.5"/></svg>
+              </span>
+            </div>
+            <div class="al-progress" aria-hidden="true"><span></span></div>
+            <p class="al-status" aria-live="polite">Your apps are locked until today&rsquo;s brief is read.</p>
+            <button class="al-btn al-btn--demo" type="button" hidden>Read today&rsquo;s brief</button>
+          </div>
+          <figcaption class="visually-hidden">How Alpha Lock works, in miniature</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- Middle floor: Hapax, laid out like the app's own entry screen, in its Rose theme
+         and the system type the app uses. The word is today's real word. -->
+    <section class="storey storey--hapax" id="hapax" aria-labelledby="hapax-title" data-dir="-1">
+      <div class="hx">
+        <div class="hx-head">
+          <img class="hx-icon" src="img/hapax-icon.png" alt="" width="64" height="64">
+          <h2 id="hapax-title" class="hx-name">Hapax</h2>
+          <p class="hx-when">A word from Hapax</p>
+        </div>
+
+        <figure class="hx-entry" aria-label="A word from Hapax">
+          <p class="hx-word" data-f="word">alleviate</p>
+          <p class="hx-meta"><span class="hx-pron" data-f="pron">uh-LEE-vee-ayt</span>, <em data-f="pos">verb</em></p>
+          <p class="hx-def" data-f="def">To make suffering or a problem less severe.</p>
+          <p class="hx-ex" data-f="ex">&ldquo;An extra lane did little to alleviate the morning traffic.&rdquo;</p>
+        </figure>
+
+        <div class="hx-info">
+          <div class="hx-copy">
+            <p class="hx-lede">One new word a day on your Lock Screen and Home Screen, with what it means, how to say it, and an example.</p>
+            <p class="hx-body">No ads, no account, no tracking. The whole app works offline.</p>
+          </div>
+          <div class="hx-actions">
+            <p class="hx-stores">
+              <a class="hx-btn" href="https://apps.apple.com/app/id6799694673">App Store</a>
+              <a class="hx-btn" href="https://play.google.com/store/apps/details?id=com.oferadar.hapax">Google Play</a>
+            </p>
+            <p class="hx-more"><a class="hx-today" href="hapax/word-of-the-day/index.html">Today&rsquo;s word</a><a href="hapax/words/index.html">All 440 words</a><a href="hapax/index.html">About Hapax</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Ground floor: SLAB, the first app. The storey is the teal slab from its icon,
+         and the playfield underneath plays by the game's rules. -->
+    <section class="storey storey--slab" id="slab" aria-labelledby="slab-title" data-dir="1">
+      <div class="sl">
+        <div class="sl-head">
+          <img class="sl-icon" src="img/slab-icon.png" alt="" width="64" height="64">
+          <h2 id="slab-title" class="sl-name">SLAB</h2>
+        </div>
+        <div class="sl-cols">
+          <p class="sl-lede">A stacking game built on sliding and slicing. Tap to drop the slab. Land it short and the overhang is sliced off, so the next one is smaller.</p>
+          <div>
+            <p class="sl-body">Calm on the surface, with a real skill ceiling: it gets harder because your target shrinks, not because it speeds up. Hit the middle for a perfect. Chain a few and the slab grows back.</p>
+            <p class="sl-body">Free on iPhone. No wifi or account needed.</p>
+            <p class="sl-actions"><a class="sl-btn" href="https://apps.apple.com/app/id6790939204">Get it on the App Store</a></p>
+          </div>
+        </div>
+
+        <figure class="sl-demo">
+          <div class="sl-stage">
+            <div class="sl-world" aria-hidden="true">
+              <span class="sl-slab" style="left:calc(50% - min(29%,160px));width:min(58%,320px);bottom:0;background:#7cb0aa"></span>
+              <span class="sl-slab" style="left:calc(50% - min(26%,144px));width:min(55%,304px);bottom:22px;background:#c67f6c"></span>
+              <span class="sl-slab" style="left:calc(50% - min(26%,144px));width:min(50%,276px);bottom:44px;background:#d8d0c1"></span>
+              <span class="sl-slab" style="left:calc(50% - min(23%,128px));width:min(47%,260px);bottom:66px;background:#7cb0aa"></span>
+              <span class="sl-slab" style="left:calc(50% - min(23%,128px));width:min(43%,238px);bottom:88px;background:#c67f6c"></span>
+            </div>
+            <span class="sl-score" aria-hidden="true" hidden>0</span>
+            <span class="sl-msg" aria-hidden="true" hidden></span>
+            <button class="sl-play" type="button" hidden><span class="sl-play__label">Play</span></button>
+          </div>
+          <p class="sl-live" aria-live="polite"></p>
+          <figcaption class="sl-help">Try a few slabs. Tap, or press Space, to drop.</figcaption>
+        </figure>
+      </div>
+    </section>
   </main>
 
-  <section style="padding:8px 0 24px">
-    <h2 style="margin-top:0">Our apps</h2>
-
-    <a class="prod" href="slab/index.html">
-      <span class="slab" style="margin:0"><i class="a"></i><i class="b"></i><i class="c"></i></span>
-      <span class="prodtext">
-        <span class="prodname">SLAB</span>
-        <span class="proddesc">A zen-premium stacking game. Slide, slice, and build one perfect slab at a time.</span>
-      </span>
-      <span class="pill">On the App Store</span>
-    </a>
-
-    <a class="prod" href="hapax/index.html">
-      <span class="pilmark">&#182;</span>
-      <span class="prodtext">
-        <span class="prodname">HAPAX</span>
-        <span class="proddesc">One word a day, on your Lock Screen. No ads, no accounts, entirely offline.</span>
-      </span>
-      <span class="pill">On the App Store and Google Play</span>
-    </a>
-  </section>
-
-  <section style="padding:8px 0 8px">
-    <h2>About</h2>
-    <p>Quietspire LLC builds small, focused apps, a zen stacking game and a daily word widget, each narrow in purpose and generous in craft. Every app explains plainly how it works and what it does with your data on its own privacy page, and there's always a straight answer at <a href="mailto:support@quietspire.com">support@quietspire.com</a>.</p>
-  </section>
-
-  <footer>
-    <span>© 2026 Quietspire LLC</span>
-    <span><a href="slab/index.html">Slab</a>  <a href="hapax/index.html">Hapax</a></span>
+  <footer class="ground">
+    <div class="ground__studio">
+      <p class="ground__name">Quietspire LLC</p>
+      <p>Independent app studio, New Jersey</p>
+      <p><a href="mailto:support@quietspire.com">support@quietspire.com</a></p>
+    </div>
+    <nav class="ground__links" aria-label="Support and privacy">
+      <div>
+        <p class="ground__app">Alpha Lock</p>
+        <a href="https://alphalock.app/support">Support</a>
+        <a href="https://alphalock.app/privacy">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">Hapax</p>
+        <a href="hapax/support.html">Support</a>
+        <a href="hapax/privacy.html">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">SLAB</p>
+        <a href="support.html">Support</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </nav>
+    <p class="ground__copy">&copy; 2026 Quietspire LLC</p>
   </footer>
 </div>
+
+<script src="home.js" defer></script>
 </body>
 </html>

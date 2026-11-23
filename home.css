@@ -1,0 +1,474 @@
+/* quietspire.com home. Its own stylesheet: style.css stays as it is for the
+   support, privacy and Hapax word pages.
+
+   The page is the spire in the studio's name, seen at night: a black sky
+   (the studio's own black-and-white mark) and a tower of three storeys, newest
+   at the top. Each storey is built from its app's real material, colours and
+   type, so no two look alike. */
+
+:root{
+  /* studio: the night around the spire */
+  --night:#0b0c0e;
+  --night-2:#12161b;
+  --star:#f4f4f5;          /* headings, wordmark */
+  --haze:#b4b7bf;          /* studio body copy */
+  --haze-2:#9a9ea7;        /* small studio text */
+  --rule:rgba(255,255,255,.12);
+
+  /* Alpha Lock (Brand.swift, value for value) */
+  --al-ink:#1a1a1a;
+  --al-paper:#f8f7f4;
+  --al-paper-edge:#d6d2c7;
+  --al-muted:#5f5f5f;
+  --al-mint:#caffbf;
+  --al-coral:#ffb5a7;
+  --al-butter:#fdffb6;
+  --al-lav:#b1afff;
+  --al-lav-light:#e2e1ff;
+
+  /* Hapax, Rose theme (sampled from the app) */
+  --hx-rose:#96354a;
+  --hx-rose-edge:#6c2232;
+  --hx-ink:#ffffff;
+  --hx-soft:#f3dde2;
+  --hx-card:#fafafa;
+  --hx-card-ink:#111111;
+  --hx-card-muted:#5b5b5b;
+
+  /* SLAB (sampled from its icon: teal top face, teal side face, dusk sky) */
+  --sl-teal:#7cb0aa;
+  --sl-teal-side:#476662;
+  --sl-terra:#c67f6c;
+  --sl-stone:#d8d0c1;
+  --sl-dusk:#1f2c3a;
+  --sl-ink:#0e1a20;
+  --sl-soft:#1d3134;
+
+  --expo:cubic-bezier(.16,1,.3,1);
+  --quart:cubic-bezier(.25,1,.5,1);
+
+  --studio:"Avenir Next","Avenir",Jost,"Helvetica Neue",Arial,sans-serif;
+  --system:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --jakarta:"Plus Jakarta Sans",var(--system);
+
+  --gutter:clamp(16px,4vw,48px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+html,body{margin:0;padding:0}
+body{
+  background:linear-gradient(180deg,var(--night) 0%,var(--night) 55%,var(--night-2) 100%);
+  background-color:var(--night);
+  color:var(--star);
+  font-family:var(--studio);
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+img{display:block;max-width:100%;height:auto}
+p{margin:0;text-wrap:pretty}
+a{color:inherit}
+
+/* the storeys slide in from the side; nothing may poke out sideways */
+.page{overflow-x:clip;min-height:100vh}
+
+:focus-visible{outline:3px solid var(--star);outline-offset:3px;border-radius:6px}
+
+.skip{
+  position:absolute;left:12px;top:-60px;z-index:10;
+  background:var(--star);color:var(--night);
+  padding:10px 14px;border-radius:8px;font-weight:600;text-decoration:none;
+}
+.skip:focus{top:12px}
+
+/* ---------- the sky: studio name, one plain line, the dock ---------- */
+
+.sky{
+  max-width:1160px;margin:0 auto;
+  padding:clamp(20px,4vw,44px) var(--gutter) 0;
+}
+.sky__bar{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:10px 24px;
+}
+.wordmark{
+  margin:0;
+  font-family:var(--studio);
+  font-weight:200;
+  font-size:clamp(26px,5.2vw,46px);
+  line-height:1;
+  letter-spacing:.3em;
+  margin-right:-.3em;
+  text-transform:uppercase;
+  color:var(--star);
+}
+.sky__mail{
+  color:var(--haze);font-size:15px;text-decoration:none;
+  border-bottom:1px solid var(--rule);padding-bottom:2px;
+  transition:color .2s var(--quart),border-color .2s var(--quart);
+}
+.sky__mail:hover{color:var(--star);border-color:var(--star)}
+.sky__mail-short{display:none}
+@media (max-width:560px){
+  .sky__mail-long{display:none}
+  .sky__mail-short{display:inline}
+}
+
+.lede{
+  margin-top:clamp(18px,3vw,30px);
+  max-width:36ch;
+  text-wrap:pretty;
+  font-size:clamp(19px,2.3vw,24px);
+  line-height:1.4;
+  font-weight:400;
+  color:var(--haze);
+}
+
+/* a row of app icons, like the one on your own Home Screen */
+.dock{
+  display:flex;gap:clamp(14px,3vw,30px);
+  margin-top:clamp(22px,3.5vw,34px);
+}
+.dock__app{
+  display:flex;flex-direction:column;align-items:center;
+  width:84px;text-align:center;text-decoration:none;
+  border-radius:16px;padding:4px 0;
+}
+.dock__app img{
+  width:64px;height:64px;border-radius:22.5%;
+  box-shadow:0 0 0 1px rgba(255,255,255,.14),0 10px 24px rgba(0,0,0,.5);
+  transition:transform .35s var(--expo);
+}
+.dock__app:hover img{transform:translateY(-4px)}
+.dock__app:active img{transform:translateY(0) scale(.96)}
+.dock__name{margin-top:9px;font-size:14px;font-weight:500;color:var(--star);line-height:1.2}
+.dock__state{margin-top:2px;font-size:13px;color:var(--haze-2);line-height:1.25}
+
+/* ---------- the tower ---------- */
+
+.tower{
+  max-width:1160px;margin:0 auto;
+  padding:0 var(--gutter);
+  display:flex;flex-direction:column;align-items:center;
+}
+
+/* Each storey is a slab: it tapers toward the top and lands a little off
+   centre, like a real SLAB run. The thick bottom edge is the slab's side. */
+.storey{
+  position:relative;
+  width:100%;
+  border-radius:6px 6px 4px 4px;
+}
+.storey__body{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:clamp(28px,4vw,56px);
+  padding:clamp(28px,5vw,60px) clamp(20px,5vw,60px) clamp(32px,5vw,64px);
+}
+@media (min-width:860px){
+  .storey__body{grid-template-columns:minmax(0,1fr) minmax(0,400px);align-items:center}
+}
+
+.storey--alpha{width:calc(100% - 14px);left:5px;margin-top:clamp(118px,19vw,200px)}
+/* on wide screens Scoop stands in the empty sky beside the intro, so the roof can come up */
+@media (min-width:860px){.storey--alpha{margin-top:clamp(56px,5vw,72px)}}
+.storey--hapax{width:calc(100% - 6px);left:-3px}
+.storey--slab{width:100%}
+@media (min-width:860px){
+  .storey--alpha{width:86%;left:1.6%}
+  .storey--hapax{width:93%;left:-1.1%}
+}
+
+/* ================= Alpha Lock ================= */
+
+.storey--alpha{
+  background:var(--al-paper);
+  color:var(--al-ink);
+  font-family:var(--jakarta);
+  box-shadow:inset 0 -10px 0 var(--al-paper-edge);
+  z-index:3;
+}
+.storey--alpha :focus-visible{outline-color:var(--al-ink)}
+
+/* Scoop lives on the roof */
+.scoop{
+  position:absolute;bottom:100%;right:clamp(8px,6%,72px);
+  width:clamp(150px,22vw,250px);
+  padding:0;margin:0;border:0;background:none;cursor:pointer;
+  overflow:hidden;               /* he comes up out of the roof */
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  border-radius:0;
+}
+.scoop img{width:100%;transform:translateY(7.3%);will-change:transform}
+.scoop:focus-visible{outline:3px solid var(--star);outline-offset:2px;border-radius:12px}
+
+.al-chip{
+  display:inline-block;
+  background:var(--al-butter);
+  border:2.5px solid var(--al-ink);
+  border-radius:999px;
+  padding:5px 14px;
+  font-size:14px;font-weight:700;line-height:1.3;
+  box-shadow:2px 2px 0 var(--al-ink);
+}
+.al-head{display:flex;align-items:center;gap:16px;margin-top:20px}
+.al-icon{
+  width:60px;height:60px;flex:none;border-radius:22.5%;
+  border:3px solid var(--al-ink);box-shadow:3px 3px 0 var(--al-ink);
+}
+.al-name{margin:0;line-height:0}
+.al-name img{width:clamp(190px,26vw,280px);height:auto}
+
+.al-lede{
+  margin-top:22px;max-width:30ch;
+  font-size:clamp(20px,2.3vw,25px);line-height:1.35;font-weight:700;letter-spacing:-.01em;
+}
+.al-lede mark{
+  background:linear-gradient(transparent 12%,var(--al-mint) 12%,var(--al-mint) 92%,transparent 92%);
+  color:inherit;padding:0 .12em;margin:0 -.04em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone;
+}
+.al-body{margin-top:12px;max-width:40ch;font-size:17px;font-weight:500;color:var(--al-muted)}
+.al-actions{margin-top:26px}
+
+.al-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:10px 22px;
+  font:700 17px/1.2 var(--jakarta);
+  color:var(--al-ink);background:var(--al-mint);
+  border:3px solid var(--al-ink);border-radius:14px;
+  box-shadow:4px 4px 0 var(--al-ink);
+  text-decoration:none;cursor:pointer;
+  transition:transform .14s var(--quart),box-shadow .14s var(--quart),background-color .2s var(--quart);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+}
+.al-btn:hover{transform:translate(-1px,-1px);box-shadow:5px 5px 0 var(--al-ink)}
+.al-btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--al-ink)}
+.al-btn[aria-disabled="true"]{cursor:progress}
+
+/* the lock, in miniature */
+.al-demo{margin:0}
+.al-phone{
+  background:var(--al-lav-light);
+  border:3px solid var(--al-ink);border-radius:26px;
+  box-shadow:6px 6px 0 var(--al-ink);
+  padding:22px 20px 20px;
+  max-width:400px;
+}
+.al-tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,2.4vw,14px)}
+.al-tile{
+  position:relative;aspect-ratio:1;border-radius:22%;
+  border:2.5px solid var(--al-ink);
+  display:grid;place-items:center;
+  transition:filter .5s var(--quart),opacity .5s var(--quart);
+}
+.al-tile--mint{background:var(--al-mint)}
+.al-tile--lav{background:var(--al-lav)}
+.al-tile--coral{background:var(--al-coral)}
+.al-tile--butter{background:var(--al-butter)}
+.al-glyph{width:52%;height:52%;fill:none;stroke:var(--al-ink);stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.al-tile--mint .al-glyph{fill:var(--al-ink)}
+.al-lock{
+  position:absolute;right:-9px;top:-9px;width:26px;height:26px;
+  background:var(--al-ink);border-radius:50%;padding:4px;
+  transition:opacity .35s var(--quart),transform .45s var(--expo);
+}
+.al-lock rect{fill:#fff}
+.al-shackle{
+  fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;
+  transform-box:view-box;transform-origin:16px 11px;
+  transition:transform .55s var(--expo);
+}
+[data-state="locked"] .al-tile,[data-state="reading"] .al-tile{filter:grayscale(1);opacity:.62}
+[data-state="open"] .al-shackle{transform:translateY(-3px) rotate(28deg)}
+[data-state="open"] .al-lock{opacity:0;transform:scale(.6) translateY(-6px);transition-delay:.5s}
+[data-state="open"] .al-tile:nth-child(2),[data-state="open"] .al-tile:nth-child(2) .al-shackle{transition-delay:.07s}
+[data-state="open"] .al-tile:nth-child(3),[data-state="open"] .al-tile:nth-child(3) .al-shackle{transition-delay:.14s}
+[data-state="open"] .al-tile:nth-child(4),[data-state="open"] .al-tile:nth-child(4) .al-shackle{transition-delay:.21s}
+
+.al-progress{
+  margin-top:20px;height:12px;border-radius:999px;
+  border:2.5px solid var(--al-ink);background:#fff;overflow:hidden;
+}
+.al-progress span{
+  display:block;height:100%;width:100%;
+  background:var(--al-mint);
+  transform:scaleX(0);transform-origin:left center;
+}
+[data-state="open"] .al-progress span{transform:scaleX(1)}
+.al-status{margin-top:14px;font-size:16px;font-weight:700;line-height:1.35;min-height:2.7em}
+.al-btn--demo{margin-top:14px;width:100%;background:#fff}
+
+/* ================= Hapax ================= */
+
+.storey--hapax{
+  background:var(--hx-rose);
+  color:var(--hx-ink);
+  font-family:var(--system);
+  box-shadow:inset 0 -10px 0 var(--hx-rose-edge);
+  z-index:2;
+}
+.hx{padding:clamp(28px,5vw,60px) clamp(20px,5vw,60px) clamp(36px,5vw,66px)}
+.hx-head{display:flex;align-items:center;flex-wrap:wrap;gap:10px 14px}
+.hx-icon{width:48px;height:48px;border-radius:22.5%;box-shadow:0 8px 20px rgba(60,10,22,.45)}
+.hx-name{margin:0;font-size:clamp(28px,3.2vw,34px);font-weight:700;letter-spacing:-.02em;line-height:1}
+.hx-when{flex-basis:100%;font-size:15px;color:var(--hx-soft)}
+@media (min-width:860px){.hx-when{flex-basis:auto;margin-left:auto}}
+
+/* the entry, set the way the app sets it */
+.hx-entry{margin:clamp(26px,4vw,44px) 0 0}
+.hx-word{
+  font-size:clamp(48px,13vw,156px);font-weight:700;
+  letter-spacing:-.035em;line-height:1;
+  white-space:nowrap;
+}
+.hx-meta{margin-top:clamp(10px,1.4vw,16px);font-size:clamp(18px,1.8vw,21px);color:var(--hx-soft)}
+.hx-pron{
+  text-decoration:underline dashed;text-underline-offset:5px;text-decoration-thickness:1px;
+}
+button.hx-pron{
+  font:inherit;color:inherit;background:none;border:0;padding:2px 0;margin:0;cursor:pointer;
+  display:inline-flex;align-items:center;gap:6px;
+}
+button.hx-pron svg{width:18px;height:18px;flex:none;fill:currentColor;opacity:.9}
+button.hx-pron:hover{color:#fff}
+button.hx-pron.is-speaking svg{animation:hx-pulse .9s var(--quart) infinite}
+@keyframes hx-pulse{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.hx-def{margin-top:clamp(16px,2vw,22px);max-width:30ch;font-size:clamp(21px,2.5vw,28px);line-height:1.3}
+.hx-ex{margin-top:12px;max-width:44ch;font-size:clamp(17px,1.7vw,19px);line-height:1.45;font-style:italic;color:var(--hx-soft)}
+
+.hx-info{
+  margin-top:clamp(30px,4vw,46px);padding-top:clamp(24px,3vw,32px);
+  border-top:1px solid rgba(255,255,255,.3);
+  display:grid;grid-template-columns:minmax(0,1fr);gap:24px 56px;
+}
+@media (min-width:860px){.hx-info{grid-template-columns:minmax(0,1fr) auto;align-items:end}}
+.hx-lede{max-width:38ch;font-size:clamp(18px,1.9vw,20px);line-height:1.45}
+.hx-body{margin-top:10px;max-width:40ch;font-size:17px;color:var(--hx-soft)}
+.hx-stores{display:flex;flex-wrap:wrap;gap:12px}
+.hx-btn{
+  display:inline-flex;align-items:center;min-height:48px;padding:10px 22px;
+  background:#fff;color:var(--hx-rose);border-radius:999px;
+  font-weight:600;font-size:17px;text-decoration:none;
+  transition:transform .3s var(--expo),box-shadow .3s var(--expo);
+  box-shadow:0 1px 0 rgba(0,0,0,.08);
+}
+.hx-btn:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(60,10,22,.35)}
+.hx-btn:active{transform:translateY(0)}
+.hx-more{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:18px;font-size:16px}
+.hx-more a{color:var(--hx-ink);text-decoration:underline;text-decoration-style:dashed;text-underline-offset:4px;text-decoration-thickness:1px}
+.hx-more a:hover{text-decoration-style:solid}
+.storey--hapax :focus-visible{outline-color:#fff}
+
+/* ================= SLAB ================= */
+
+.storey--slab{
+  background:var(--sl-teal);
+  color:var(--sl-ink);
+  font-family:var(--studio);
+  box-shadow:inset 0 -10px 0 var(--sl-teal-side);
+  z-index:1;
+}
+.storey--slab :focus-visible{outline-color:var(--sl-ink)}
+.sl{padding:clamp(28px,5vw,60px) clamp(20px,5vw,60px) clamp(36px,5vw,66px)}
+.sl-head{display:flex;align-items:center;gap:16px}
+.sl-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:4px 56px;margin-top:20px}
+@media (min-width:860px){.sl-cols{grid-template-columns:minmax(0,1.05fr) minmax(0,1fr)}.sl-cols .sl-body:first-child{margin-top:4px}}
+.sl-icon{width:60px;height:60px;border-radius:22.5%;box-shadow:0 10px 22px rgba(20,40,40,.35)}
+.sl-name{margin:0;font-size:clamp(32px,4vw,42px);font-weight:600;letter-spacing:.22em;margin-right:-.22em;line-height:1}
+.sl-lede{max-width:30ch;font-size:clamp(19px,2.1vw,22px);line-height:1.4;font-weight:500}
+.sl-body{margin-top:12px;max-width:42ch;font-size:17px;color:var(--sl-soft)}
+.sl-actions{margin-top:26px}
+.sl-btn{
+  display:inline-flex;align-items:center;min-height:48px;padding:10px 22px;
+  background:var(--sl-dusk);color:var(--sl-stone);border-radius:6px;
+  font-weight:600;font-size:17px;text-decoration:none;
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,.35);
+  transition:transform .3s var(--expo),background-color .25s var(--quart);
+}
+.sl-btn:hover{background:#2a3a4b;transform:translateY(-2px)}
+.sl-btn:active{transform:translateY(1px);box-shadow:inset 0 -2px 0 rgba(0,0,0,.22)}
+
+.sl-demo{margin:clamp(28px,4vw,44px) 0 0}
+/* registered so the stage's colour can drift as the stack climbs */
+@property --h{syntax:"<number>";inherits:true;initial-value:208}
+.sl-stage{
+  --h:208;
+  position:relative;overflow:hidden;
+  height:clamp(270px,28vw,330px);
+  border-radius:10px;
+  background:linear-gradient(180deg,hsl(var(--h) 30% 16%) 0%,hsl(var(--h) 20% 33%) 100%);
+  box-shadow:0 0 0 3px var(--sl-teal-side),0 18px 36px rgba(20,45,45,.35),inset 0 18px 40px rgba(0,0,0,.25);
+  transition:--h 1.2s linear;
+}
+.sl-world{position:absolute;left:0;right:0;bottom:22px;height:100%;transition:transform .5s var(--expo)}
+.sl-slab{
+  position:absolute;bottom:0;height:22px;
+  border-radius:3px;
+  box-shadow:inset 0 -6px 0 rgba(0,0,0,.22),inset 0 2px 0 rgba(255,255,255,.3);
+}
+.sl-slab.is-moving{left:0;will-change:transform}
+.sl-score{
+  position:absolute;left:18px;top:12px;
+  font-size:40px;font-weight:300;line-height:1;color:#fff;
+  font-variant-numeric:tabular-nums;
+}
+.sl-msg{
+  position:absolute;right:16px;top:16px;
+  font-size:15px;font-weight:600;color:#fff;text-align:right;line-height:1.3;
+}
+.sl-play{
+  position:absolute;inset:0;width:100%;
+  display:flex;align-items:flex-end;justify-content:center;padding-bottom:0;
+  background:transparent;border:0;border-radius:12px;cursor:pointer;
+  font:inherit;color:#fff;
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  -webkit-user-select:none;user-select:none;
+}
+.sl-play__label{
+  position:absolute;left:50%;top:34%;transform:translate(-50%,-50%);
+  background:rgba(10,16,22,.72);color:#fff;
+  padding:10px 20px;border-radius:999px;
+  font-size:16px;font-weight:600;letter-spacing:.02em;white-space:nowrap;
+  transition:opacity .3s var(--quart);
+}
+.sl-stage[data-mode="play"] .sl-play__label{opacity:0}
+.sl-play:focus-visible{outline:3px solid var(--sl-ink);outline-offset:3px}
+.sl-help{margin-top:12px;font-size:15px;color:var(--sl-soft)}
+html:not(.js) .sl-help{display:none}  /* without the script it's a picture, not a game */
+.sl-live,.visually-hidden{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- the ground ---------- */
+
+.ground{
+  max-width:1160px;margin:0 auto;
+  padding:clamp(40px,6vw,64px) var(--gutter) clamp(36px,5vw,56px);
+  display:grid;grid-template-columns:minmax(0,1fr);gap:32px;
+  color:var(--haze);font-size:16px;
+}
+@media (min-width:760px){
+  .ground{grid-template-columns:minmax(0,1fr) auto}
+}
+.ground p{margin:0 0 4px}
+.ground__name{color:var(--star);font-weight:500;font-size:17px}
+.ground a{color:var(--haze);text-decoration:none;border-bottom:1px solid var(--rule)}
+.ground a:hover{color:var(--star);border-color:var(--star)}
+.ground__links{display:flex;flex-wrap:wrap;gap:20px 44px}
+.ground__links div{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+.ground__app{color:var(--star);font-weight:500}
+.ground__copy{grid-column:1/-1;color:var(--haze-2);font-size:14px;border-top:1px solid var(--rule);padding-top:20px}
+
+/* ---------- reduced motion: a composed, still tower ---------- */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms !important;transition-delay:0s !important}
+  /* the few state changes that remain are crossfades */
+  .al-tile,.al-lock,.sl-play__label{transition:opacity .2s linear !important}
+  button.hx-pron.is-speaking svg{animation:none;opacity:.55}
+  .dock__app:hover img,.hx-btn:hover,.sl-btn:hover,.al-btn:hover{transform:none}
+  [data-state="open"] .al-shackle{transform:translateY(-3px) rotate(28deg)}
+}
