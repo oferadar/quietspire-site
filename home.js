@@ -7,6 +7,13 @@
 (function () {
   'use strict';
 
+  // Paths are relative to this file, not the page, so the same script serves
+  // the home page and the app pages under /hapax/ and /slab/.
+  var ROOT = (function () {
+    var s = document.currentScript;
+    try { return s && s.src ? new URL('.', s.src).href : ''; } catch (e) { return ''; }
+  })();
+
   var EXPO = 'cubic-bezier(0.16, 1, 0.3, 1)';
   var QUART_IN = 'cubic-bezier(0.5, 0, 0.75, 0)';
   var mq = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : { matches: false };
@@ -32,7 +39,7 @@
      first pixel enters the viewport, so the offset is never seen at rest. */
   function tower() {
     if (still() || !('IntersectionObserver' in window)) return;
-    var storeys = document.querySelectorAll('.storey');
+    var storeys = document.querySelectorAll('.storey, [data-land]');
     var seen = new WeakMap();
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
@@ -70,13 +77,13 @@
   var MOOD_WORDS = { psst: 'whispering psst', ready: 'holding the brief', done: 'cheering' };
 
   function preloadMoods() {
-    MOODS.forEach(function (m) { var i = new Image(); i.src = 'img/scoop-' + m + '.png'; });
+    MOODS.forEach(function (m) { var i = new Image(); i.src = ROOT + 'img/scoop-' + m + '.png'; });
   }
 
   function setMood(mood, animate) {
     if (!scoopBtn || scoopBtn.getAttribute('data-mood') === mood && !animate) return;
     var swap = function () {
-      scoopImg.src = 'img/scoop-' + mood + '.png';
+      scoopImg.src = ROOT + 'img/scoop-' + mood + '.png';
       scoopBtn.setAttribute('data-mood', mood);
     };
     if (!canAnimate(scoopImg)) { swap(); return; }
@@ -227,9 +234,84 @@
       entry.addEventListener('hx:word', label);
     }
 
+    // put an entry into the page: word, pronunciation, part of speech, definition, example
+    function fill(f) {
+      entry.querySelectorAll('[data-f]').forEach(function (el) {
+        var k = el.getAttribute('data-f'), v = f[k];
+        var target = el.tagName === 'BUTTON' ? el.firstChild : el;
+        if (v) { target.textContent = v; el.hidden = false; } else if (k === 'ex' || k === 'pos') el.hidden = true;
+      });
+      entry.dispatchEvent(new Event('hx:word'));
+      fit();
+    }
+    function read() {
+      var f = {};
+      entry.querySelectorAll('[data-f]').forEach(function (el) {
+        var target = el.tagName === 'BUTTON' ? el.firstChild : el;
+        f[el.getAttribute('data-f')] = el.hidden ? '' : target.textContent;
+      });
+      return f;
+    }
+
+    var fallback = read();      // the real word written into the HTML
+    var todayWord = null, todayLabel = '';
+    var level = 'intermediate'; // the stream the site's daily pages follow
+
+    /* The Hapax page only: the app's four difficulty levels. Intermediate is
+       the level the daily pages follow, so it shows today's word; each of the
+       others shows a word from that level, a different one on each press.
+       Without the script the four levels are plain text. */
+    var levels = document.querySelector('.hx-levels');
+    var poolEl = document.getElementById('hx-pool');
+    var said = document.querySelector('.hx-said');
+    var pool = null;
+    try { pool = poolEl ? JSON.parse(poolEl.textContent) : null; } catch (e) { pool = null; }
+    if (levels && pool) {
+      var turn = {};
+      var NAME = { beginner: 'A beginner word', advanced: 'An advanced word', expert: 'An expert word' };
+      levels.querySelectorAll('.hx-chip').forEach(function (span) {
+        var lv = span.getAttribute('data-level');
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.className = 'hx-chip';
+        b.setAttribute('data-level', lv);
+        b.setAttribute('aria-pressed', lv === level ? 'true' : 'false');
+        b.textContent = span.textContent;
+        span.replaceWith(b);
+        b.addEventListener('click', function () {
+          var f, label;
+          if (lv === 'intermediate') {
+            f = todayWord || fallback;
+            label = todayWord ? todayLabel : 'A word from Hapax';
+          } else {
+            var list = pool[lv] || [];
+            if (!list.length) return;
+            turn[lv] = turn[lv] === undefined ? 0 : (turn[lv] + 1) % list.length;
+            f = list[turn[lv]];
+            label = NAME[lv];
+          }
+          level = lv;
+          levels.querySelectorAll('.hx-chip').forEach(function (c) {
+            c.setAttribute('aria-pressed', c === b ? 'true' : 'false');
+          });
+          fill(f);
+          when.textContent = label;
+          entry.setAttribute('aria-label', label);
+          if (said) said.textContent = label + ': ' + f.word + '. ' + f.def;
+          if (!canAnimate(entry)) return;
+          // the new entry settles in; reduced motion: a short crossfade, no movement
+          if (still()) entry.animate([{ opacity: 0.35 }, { opacity: 1 }], { duration: 220, easing: 'linear' });
+          else entry.animate(
+            [{ opacity: 0.35, transform: 'translateY(12px)' }, { opacity: 1, transform: 'none' }],
+            { duration: 600, easing: EXPO }
+          );
+        });
+      });
+    }
+
     var d = new Date();
     var key = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    var url = 'hapax/word-of-the-day/' + key + '.html';
+    var url = ROOT + 'hapax/word-of-the-day/' + key + '.html';
     if (!window.fetch || !window.DOMParser) return;
     fetch(url).then(function (r) { if (!r.ok) throw new Error(r.status); return r.text(); })
       .then(function (html) {
@@ -250,16 +332,13 @@
           ex: exEl && /italic/.test(exEl.getAttribute('style') || '') ? exEl.textContent.trim() : ''
         };
         if (!f.word || !f.def) return;
-        entry.querySelectorAll('[data-f]').forEach(function (el) {
-          var k = el.getAttribute('data-f'), v = f[k];
-          var target = el.tagName === 'BUTTON' ? el.firstChild : el;
-          if (v) { target.textContent = v; el.hidden = false; } else if (k === 'ex' || k === 'pos') el.hidden = true;
-        });
-        when.textContent = 'Today’s word, ' + dateText;
-        entry.setAttribute('aria-label', 'Today’s word on Hapax');
+        todayWord = f;
+        todayLabel = 'Today’s word, ' + dateText;
         if (today) today.href = url;
-        entry.dispatchEvent(new Event('hx:word'));
-        fit();
+        if (level !== 'intermediate') return;  // a reader already picked another level
+        fill(f);
+        when.textContent = todayLabel;
+        entry.setAttribute('aria-label', 'Today’s word on Hapax');
       })
       .catch(function () { /* the word in the HTML stays */ });
   }

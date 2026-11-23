@@ -3,32 +3,114 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SLAB by Quietspire</title>
-<meta name="description" content="SLAB is a zen-premium stacking game by Quietspire LLC. Slide, slice, and build one perfect slab at a time.">
+<meta name="apple-itunes-app" content="app-id=6790939204">
+<title>SLAB, a stacking game by Quietspire</title>
+<meta name="description" content="SLAB is a stacking game built on sliding and slicing. Tap to drop the slab; land it short and the overhang is sliced off, so the next one is smaller. Free on iPhone.">
+<link rel="canonical" href="https://quietspire.com/slab/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quietspire.com/slab/">
+<meta property="og:title" content="SLAB, a stacking game by Quietspire">
+<meta property="og:description" content="Tap to drop the slab. Land it short and the overhang is sliced off. It gets harder because your target shrinks, not because it speeds up.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="/img/quietspire-q.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/quietspire-q.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/home.css">
+<link rel="stylesheet" href="/pages.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
-<div class="wrap">
-  <header class="site">
-    <div class="navrow">
-      <a class="brand" href="../index.html" style="text-decoration:none">Quietspire</a>
-      <nav><a href="../index.html">Home</a><a href="../privacy.html">Privacy</a><a href="../support.html">Support</a></nav>
-    </div>
+<body class="p-slab">
+<a class="skip" href="#main">Skip to SLAB</a>
+
+<div class="page">
+  <header class="bar">
+    <a class="bar__mark" href="/">Quietspire</a>
+    <nav class="bar__apps" aria-label="Our apps">
+      <a class="bar__app" href="/#alpha-lock"><img src="/img/alpha-lock-icon.png" alt="" width="28" height="28">Alpha Lock</a>
+      <a class="bar__app" href="/hapax/"><img src="/img/hapax-icon.png" alt="" width="28" height="28">Hapax</a>
+      <a class="bar__app" href="/slab/" aria-current="page"><img src="/img/slab-icon.png" alt="" width="28" height="28">SLAB</a>
+    </nav>
   </header>
 
-  <main class="hero" style="padding:56px 0 40px">
-    <div class="slab"><i class="a"></i><i class="b"></i><i class="c"></i></div>
-    <h1>SLAB</h1>
-    <p class="tag">A zen-premium stacking game. Slide, slice, and build one perfect slab at a time.</p>
-    <span class="pill">On the App Store</span>
+  <main id="main" class="ptower">
+
+    <!-- The teal slab from SLAB's icon, and a playfield that follows the game's
+         rules. Everything else in the game is stacked underneath, slab by slab,
+         widening to the ground like a run. -->
+    <section class="storey storey--slab" aria-labelledby="slab-title">
+      <div class="sl">
+        <div class="sl-head">
+          <img class="sl-icon" src="/img/slab-icon.png" alt="" width="64" height="64">
+          <h1 id="slab-title" class="sl-name">SLAB</h1>
+        </div>
+        <div class="sl-cols">
+          <p class="sl-lede">A stacking game built on sliding and slicing. Tap to drop the slab. Land it short and the overhang is sliced off, so the next one is smaller.</p>
+          <div>
+            <p class="sl-body">Calm on the surface, with a real skill ceiling: it gets harder because your target shrinks, not because it speeds up. Hit the middle for a perfect. Chain a few and the slab grows back.</p>
+            <p class="sl-body">Free on iPhone. No wifi or account needed.</p>
+            <p class="sl-actions"><a class="sl-btn" href="https://apps.apple.com/app/id6790939204">Get it on the App Store</a></p>
+          </div>
+        </div>
+
+        <figure class="sl-demo">
+          <div class="sl-stage">
+            <div class="sl-world" aria-hidden="true">
+              <span class="sl-slab" style="left:calc(50% - min(29%,160px));width:min(58%,320px);bottom:0;background:#7cb0aa"></span>
+              <span class="sl-slab" style="left:calc(50% - min(26%,144px));width:min(55%,304px);bottom:22px;background:#c67f6c"></span>
+              <span class="sl-slab" style="left:calc(50% - min(26%,144px));width:min(50%,276px);bottom:44px;background:#d8d0c1"></span>
+              <span class="sl-slab" style="left:calc(50% - min(23%,128px));width:min(47%,260px);bottom:66px;background:#7cb0aa"></span>
+              <span class="sl-slab" style="left:calc(50% - min(23%,128px));width:min(43%,238px);bottom:88px;background:#c67f6c"></span>            </div>
+            <span class="sl-score" aria-hidden="true" hidden>0</span>
+            <span class="sl-msg" aria-hidden="true" hidden></span>
+            <button class="sl-play" type="button" hidden><span class="sl-play__label">Play</span></button>
+          </div>
+          <p class="sl-live" aria-live="polite"></p>
+          <figcaption class="sl-help">Try a few slabs. Tap, or press Space, to drop.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="sl-stack" aria-labelledby="stack-title">
+      <h2 id="stack-title" class="visually-hidden">What else is in SLAB</h2>
+      <ul class="sl-rules">
+        <li class="sl-rule" data-land data-dir="-1"><h3>Crystals</h3><p>Skins and worlds to unlock with in-game crystals.</p></li>
+        <li class="sl-rule" data-land data-dir="1"><h3>Every day</h3><p>A daily gift and three daily challenges.</p></li>
+        <li class="sl-rule" data-land data-dir="-1"><h3>As you climb</h3><p>The colors change the higher the stack goes.</p></li>
+        <li class="sl-rule" data-land data-dir="1"><h3>Ads</h3><p>Some runs show a short ad, never before your first run. Rewarded ads are your choice, to revive a run or top up crystals. Remove Ads is an in-app purchase.</p></li>
+        <li class="sl-rule" data-land data-dir="-1"><h3>Your progress</h3><p>Your high score and crystals are saved on your device. <a href="/support.html">Support</a> and <a href="/privacy.html">privacy</a> have the details.</p></li>
+      </ul>
+    </section>
   </main>
 
-  <footer>
-    <span>© 2026 Quietspire LLC</span>
-    <span><a href="../privacy.html">Privacy</a>  <a href="../support.html">Support</a></span>
+  <footer class="ground">
+    <div class="ground__studio">
+      <p class="ground__name">Quietspire LLC</p>
+      <p>Independent app studio, New Jersey</p>
+      <p><a href="mailto:support@quietspire.com">support@quietspire.com</a></p>
+    </div>
+    <nav class="ground__links" aria-label="Support and privacy">
+      <div>
+        <p class="ground__app">Alpha Lock</p>
+        <a href="https://alphalock.app/support">Support</a>
+        <a href="https://alphalock.app/privacy">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">Hapax</p>
+        <a href="/hapax/support.html">Support</a>
+        <a href="/hapax/privacy.html">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">SLAB</p>
+        <a href="/support.html">Support</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </nav>
+    <p class="ground__copy">&copy; 2026 Quietspire LLC</p>
   </footer>
 </div>
+
+<script src="/home.js" defer></script>
 </body>
 </html>

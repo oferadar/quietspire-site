@@ -1,4 +1,6 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;500&display=swap");
 :root{
+  --studio:"Avenir Next","Avenir",Jost,"Helvetica Neue",Arial,sans-serif;
   --bg:#0e1622; --bg2:#0a111b; --panel:#131f2e;
   --ink:#eaf0f7; --muted:#9fb2c6; --faint:#6f8299;
   --teal:#7cb0aa; --terra:#c67f6c; --stone:#d8d0c1; --line:rgba(255,255,255,.08);
@@ -13,11 +15,26 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 .wrap{max-width:760px;margin:0 auto;padding:0 24px}
-header.site{padding:34px 0 10px}
-.brand{font-family:"Bebas Neue",Oswald,sans-serif;letter-spacing:.22em;font-size:15px;color:var(--teal);text-transform:uppercase}
-nav a{color:var(--muted);text-decoration:none;margin-left:22px;font-size:15px;border-bottom:1px solid transparent;padding-bottom:2px}
-nav a:hover{color:var(--ink);border-bottom-color:var(--teal)}
-.navrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+/* Header and footer: the studio's own, as on the home page (home.css, pages.css).
+   2026-11-23. Only these two changed; everything between them is as it was.
+   Colours are the home's: --star #f4f4f5, --haze #b4b7bf, --haze-2 #9a9ea7, and
+   they are measured here against #14202f, the lightest stop of this page's
+   gradient: 14.96, 8.19 and 6.12 to 1. */
+header.site{padding:clamp(14px,2.6vw,28px) 0 6px}
+.navrow{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:2px 24px}
+.brand{
+  display:inline-block;padding:12px 0;
+  font-family:var(--studio);font-weight:200;font-size:clamp(21px,2.6vw,28px);line-height:1;
+  letter-spacing:.3em;margin-right:-.3em;text-transform:uppercase;color:#f4f4f5;
+}
+header.site nav{display:flex;flex-wrap:wrap;gap:2px 4px}
+header.site nav a{
+  display:inline-flex;align-items:center;min-height:44px;padding:6px 10px;border-radius:12px;
+  color:#b4b7bf;font-family:var(--studio);font-size:15px;font-weight:500;text-decoration:none;
+  transition:color .2s cubic-bezier(.25,1,.5,1),background-color .2s cubic-bezier(.25,1,.5,1);
+}
+header.site nav a:hover{color:#f4f4f5;background:rgba(255,255,255,.07)}
+@media (max-width:640px){header.site nav{margin-left:-10px}}
 h1{font-family:"Bebas Neue",Oswald,sans-serif;letter-spacing:.04em;font-weight:400;line-height:1.02;margin:.2em 0 .1em}
 .hero h1{font-size:clamp(64px,16vw,132px)}
 .tag{color:var(--muted);font-size:19px;margin:6px 0 26px}
@@ -40,8 +57,22 @@ li{margin:6px 0}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:18px 0}
 .mail{font-family:"Bebas Neue",Oswald,sans-serif;letter-spacing:.06em;font-size:26px;color:var(--ink);text-decoration:none}
 .mail:hover{color:var(--teal)}
-footer{border-top:1px solid var(--line);margin-top:56px;padding:26px 0 46px;color:var(--faint);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
-footer a{color:var(--faint)}
+footer{
+  border-top:1px solid rgba(255,255,255,.12);margin-top:56px;padding:18px 0 46px;
+  color:#9a9ea7;font-family:var(--studio);font-size:14px;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px 24px;
+}
+footer a{
+  display:inline-block;padding:10px 0 2px;
+  color:#b4b7bf;font-size:15px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.12);
+  transition:color .2s cubic-bezier(.25,1,.5,1),border-color .2s cubic-bezier(.25,1,.5,1);
+}
+footer a + a{margin-left:20px}
+footer a:hover{color:#f4f4f5;border-color:#f4f4f5}
+
+/* a visible focus ring for keyboard users, as on the home page */
+:focus-visible{outline:3px solid #f4f4f5;outline-offset:3px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){header.site nav a,footer a{transition:none}}
 
 /* product rows (homepage) */
 .prod{display:flex;align-items:center;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin:14px 0;text-decoration:none;flex-wrap:wrap}

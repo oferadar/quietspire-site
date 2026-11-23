@@ -3,39 +3,193 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hapax: Word of the Day, by Quietspire</title>
-<meta name="description" content="Hapax puts one new word a day on your Lock Screen. No ads, no accounts, no tracking: entirely offline. By Quietspire LLC.">
+<meta name="apple-itunes-app" content="app-id=6799694673">
+<title>Hapax: a new word every day on your Lock Screen, by Quietspire</title>
+<meta name="description" content="Hapax puts one new word a day on your iPhone Lock Screen and Home Screen, with its meaning, pronunciation and an example. 440 entries written by hand. No ads, no account. On iPhone and Android.">
+<link rel="canonical" href="https://quietspire.com/hapax/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://quietspire.com/hapax/">
+<meta property="og:title" content="Hapax: a new word every day on your Lock Screen">
+<meta property="og:description" content="One new word a day, with its meaning, pronunciation and an example. 440 entries written by hand. By Quietspire LLC.">
+<meta name="theme-color" content="#0b0c0e">
+<link rel="icon" href="/img/quietspire-q.png" type="image/png">
+<link rel="apple-touch-icon" href="/img/quietspire-q.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../style.css">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/home.css">
+<link rel="stylesheet" href="/pages.css">
+<script>document.documentElement.classList.add('js')</script>
 </head>
-<body>
-<div class="wrap">
-  <header class="site">
-    <div class="navrow">
-      <a class="brand" href="../index.html" style="text-decoration:none">Quietspire</a>
-      <nav><a href="../index.html">Home</a><a href="word-of-the-day/index.html">Word of the Day</a><a href="words/index.html">Words</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a></nav>
-    </div>
+<body class="p-hapax">
+<a class="skip" href="#main">Skip to Hapax</a>
+
+<div class="page">
+  <header class="bar">
+    <a class="bar__mark" href="/">Quietspire</a>
+    <nav class="bar__apps" aria-label="Our apps">
+      <a class="bar__app" href="/#alpha-lock"><img src="/img/alpha-lock-icon.png" alt="" width="28" height="28">Alpha Lock</a>
+      <a class="bar__app" href="/hapax/" aria-current="page"><img src="/img/hapax-icon.png" alt="" width="28" height="28">Hapax</a>
+      <a class="bar__app" href="/slab/"><img src="/img/slab-icon.png" alt="" width="28" height="28">SLAB</a>
+    </nav>
   </header>
 
-  <main class="hero" style="padding:56px 0 40px">
-    <div class="pilmark" style="font-size:72px;margin:0 0 10px">&#182;</div>
-    <h1>HAPAX</h1>
-    <p class="tag">One word a day, on your Lock Screen. Definition, example, and pronunciation: no ads, no accounts, entirely offline.</p>
-    <div class="stores">
-      <a class="pill go" href="https://apps.apple.com/app/id6799694673">Download on the App Store</a>
-      <a class="pill go" href="https://play.google.com/store/apps/details?id=com.oferadar.hapax">Get it on Google Play</a>
-    </div>
-    <p style="margin-top:26px;font-size:15px">
-      <a href="word-of-the-day/index.html">Read today's word on the web</a>, or browse
-      <a href="words/index.html">all 440 entries</a>.</p>
-    <p style="margin-top:26px;font-size:15px;color:var(--faint)">A <em>hapax</em> is a word that appears exactly once in a text: which is how often you'll meet each word here: once a day, at midnight.</p>
+  <main id="main" class="ptower">
+
+    <!-- The app's own screen, in its Rose theme and the system type it uses:
+         today's word, the four levels, then what else is in the app. -->
+    <section class="storey storey--hapax" aria-labelledby="hapax-title">
+      <div class="hx">
+        <div class="hx-head">
+          <img class="hx-icon" src="/img/hapax-icon.png" alt="" width="64" height="64">
+          <h1 id="hapax-title" class="hx-name">Hapax</h1>
+          <p class="hx-when">A word from Hapax</p>
+        </div>
+
+        <figure class="hx-entry" aria-label="A word from Hapax">
+          <p class="hx-word" data-f="word">alleviate</p>
+          <p class="hx-meta"><span class="hx-pron" data-f="pron">uh-LEE-vee-ayt</span>, <em data-f="pos">verb</em></p>
+          <p class="hx-def" data-f="def">To make suffering or a problem less severe.</p>
+          <p class="hx-ex" data-f="ex">&ldquo;An extra lane did little to alleviate the morning traffic.&rdquo;</p>
+        </figure>
+
+        <div class="hx-levels" role="group" aria-labelledby="levels-title">
+          <h2 id="levels-title" class="hx-sec">Difficulty</h2>
+          <ul class="hx-chips">
+            <li><span class="hx-chip" data-level="beginner">Beginner</span></li>
+            <li><span class="hx-chip" data-level="intermediate">Intermediate</span></li>
+            <li><span class="hx-chip" data-level="advanced">Advanced</span></li>
+            <li><span class="hx-chip" data-level="expert">Expert</span></li>
+          </ul>
+          <p class="hx-levels__note">Four levels, from everyday words to ones even word lovers have never met. You pick the one that is hard for you, and your words come from it.<span class="js-only"> Press one to see a word from it.</span></p>
+          <p class="hx-said visually-hidden" aria-live="polite"></p>
+        </div>
+
+        <div class="hx-info">
+          <div class="hx-copy">
+            <p class="hx-lede">One new word a day on your iPhone Lock Screen and Home Screen, with what it means, how to say it, and an example.</p>
+            <p class="hx-body">440 entries, each written and checked by hand. The word of the day is free, there are no ads and no account, and the whole app works offline.</p>
+          </div>
+          <div class="hx-actions">
+            <p class="hx-stores">
+              <a class="hx-btn" href="https://apps.apple.com/app/id6799694673">App Store</a>
+              <a class="hx-btn" href="https://play.google.com/store/apps/details?id=com.oferadar.hapax">Google Play</a>
+            </p>
+          </div>
+        </div>
+
+        <div class="hx-app">
+          <h2 class="hx-sec">In the app</h2>
+          <dl class="hx-rows">
+            <div class="hx-row">
+              <dt>Widgets</dt>
+              <dd>The word on your Lock Screen and Home Screen. It changes at midnight, your local time, without opening the app.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>On Android</dt>
+              <dd>A Home Screen widget, and, if you turn it on, today&rsquo;s word as your lock screen wallpaper. Your home wallpaper is never changed.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>Hear it</dt>
+              <dd>Tap the pronunciation to hear the word in your phone&rsquo;s own voice. No internet needed.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>Practice</dt>
+              <dd>Go back over the words you have already met. No streaks, no scores.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>History</dt>
+              <dd>Every word you have met. On iPhone the last three days are free, and the whole History is a subscription or comes with The Whole Library.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>Word packs</dt>
+              <dd>Extra words for tests like the SAT, GRE, TOEFL and IELTS, each bought once on the App Store.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>Themes</dt>
+              <dd>Ten of them. This page wears two: Rose up here, and Light below.</dd>
+            </div>
+            <div class="hx-row">
+              <dt>Privacy</dt>
+              <dd>No ads, no account, no notifications. The App Store privacy label reads &ldquo;Data Not Collected&rdquo;.</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- The same app in its Light theme: what lives on this site, and the word
+         the app is named for, set as an entry of its own. -->
+    <section class="storey storey--paper" aria-labelledby="web-title" data-dir="1">
+      <div class="hx-web">
+        <div>
+          <h2 id="web-title" class="hx-sec">On the web</h2>
+          <ul class="hx-links">
+            <li><a class="hx-today" href="/hapax/word-of-the-day/">Today&rsquo;s word</a><p>The word the app shows on Intermediate today, on a page of its own.</p></li>
+            <li><a href="/hapax/words/">All 440 words</a><p>Every entry, with its meaning, pronunciation and an example.</p></li>
+            <li><a href="/hapax/lists/">Word lists</a><p>Words grouped by theme, from beautiful words to fancy insults.</p></li>
+            <li><a href="/hapax/words/origins.html">Word origins</a><p>Where 85 English words come from, one line each.</p></li>
+          </ul>
+        </div>
+
+        <figure class="hx-self" aria-label="What hapax means">
+          <p class="hx-self__date">Why the name</p>
+          <p class="hx-self__word">hapax</p>
+          <p class="hx-self__meta"><span>HAY-paks</span>, <em>noun</em></p>
+          <p class="hx-self__def">A word that appears exactly once in a text.</p>
+          <p class="hx-self__ex">Which is how often you meet each word here: once a day, at midnight.</p>
+        </figure>
+      </div>
+    </section>
   </main>
 
-  <footer>
-    <span>© 2026 Quietspire LLC</span>
-    <span><a href="privacy.html">Privacy</a>  <a href="support.html">Support</a></span>
+  <footer class="ground">
+    <div class="ground__studio">
+      <p class="ground__name">Quietspire LLC</p>
+      <p>Independent app studio, New Jersey</p>
+      <p><a href="mailto:support@quietspire.com">support@quietspire.com</a></p>
+    </div>
+    <nav class="ground__links" aria-label="Support and privacy">
+      <div>
+        <p class="ground__app">Alpha Lock</p>
+        <a href="https://alphalock.app/support">Support</a>
+        <a href="https://alphalock.app/privacy">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">Hapax</p>
+        <a href="/hapax/support.html">Support</a>
+        <a href="/hapax/privacy.html">Privacy</a>
+      </div>
+      <div>
+        <p class="ground__app">SLAB</p>
+        <a href="/support.html">Support</a>
+        <a href="/privacy.html">Privacy</a>
+      </div>
+    </nav>
+    <p class="ground__copy">&copy; 2026 Quietspire LLC</p>
   </footer>
 </div>
+
+<!-- a few real words from each level, as written in the app's own word list -->
+<script type="application/json" id="hx-pool">
+{
+  "beginner": [
+    {"word": "cozy", "pron": "KOH-zee", "pos": "adjective", "def": "Comfortable, warm, and inviting.", "ex": "“The cafe’s cozy corner table became their Sunday tradition.”"},
+    {"word": "linger", "pron": "LING-ger", "pos": "verb", "def": "To stay longer than necessary, reluctant to leave.", "ex": "“The last guests lingered on the porch past midnight.”"},
+    {"word": "brisk", "pron": "BRISK", "pos": "adjective", "def": "Quick, active, and energetic; pleasantly cold.", "ex": "“They set a brisk pace for the morning walk.”"}
+  ],
+  "advanced": [
+    {"word": "ephemeral", "pron": "ih-FEM-er-uhl", "pos": "adjective", "def": "Lasting for a very short time.", "ex": "“Internet fame is ephemeral; last month’s sensation is already forgotten.”"},
+    {"word": "sardonic", "pron": "sahr-DON-ik", "pos": "adjective", "def": "Grimly mocking or cynical.", "ex": "“Her sardonic toast was the only honest speech of the night.”"},
+    {"word": "laconic", "pron": "luh-KON-ik", "pos": "adjective", "def": "Using very few words; terse to the point of seeming curt.", "ex": "“His laconic reply of ‘It works’ closed a three-week email thread.”"}
+  ],
+  "expert": [
+    {"word": "apricity", "pron": "uh-PRIS-ih-tee", "pos": "noun", "def": "The warmth of the sun in winter.", "ex": "“The cat found the one square of apricity on the kitchen floor.”"},
+    {"word": "psithurism", "pron": "SITH-yuh-riz-uhm", "pos": "noun", "def": "The whispering sound of wind through leaves.", "ex": "“The campsite’s only soundtrack was psithurism and one loud owl.”"},
+    {"word": "susurrus", "pron": "soo-SUR-uhs", "pos": "noun", "def": "A soft whispering or rustling sound.", "ex": "“A susurrus of turning pages filled the reading room.”"}
+  ]
+}
+</script>
+<script src="/home.js" defer></script>
 </body>
 </html>
